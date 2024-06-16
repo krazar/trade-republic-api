@@ -49,10 +49,7 @@ export interface TimelineEvent {
     title: string;
     body: string;
     cashChangeAmount: number;
-    action: {
-      type: string;
-      payload: string;
-    };
+    action: ResponseItemAction;
     attributes: any[];
     month: string;
   };
@@ -61,10 +58,7 @@ export interface TimelineEvent {
 interface Document {
   title: string;
   detail: string;
-  action: {
-    type: string;
-    payload: string;
-  };
+  action: ResponseItemAction;
   id: string;
   postboxType: string;
 }
@@ -97,6 +91,49 @@ export interface TimelineDetail {
   titleText: string;
   subtitleText: string;
   sections: Section[];
+}
+
+export interface TimelineTransaction {
+  items: TransactionResponseItem[];
+}
+
+export interface TransactionResponseItem {
+  action?: ResponseItemAction;
+  amount: ResponseItemAmount;
+  badge?: any;
+  eventType: string;
+  icon: string;
+  id: string;
+  status: string;
+  subAmount?: ResponseItemAmount;
+  subtitle?: string;
+  timestamp: string;
+  title: string;
+}
+
+export interface ResponseItemAction {
+  payload: string;
+  type: string;
+}
+
+export interface ResponseItemAmount {
+  currencyId: string;
+  fractionDigits: number;
+  value: number;
+}
+
+export interface TimelineActivityLogResponse {
+  items: TimelineActivityLogResponseItem[];
+}
+
+export interface TimelineActivityLogResponseItem {
+  action?: ResponseItemAction;
+  eventType: string;
+  icon: string;
+  id: string;
+  subtitle?: string;
+  timestamp: string;
+  title: string;
 }
 
 export interface ProcessResponse {
@@ -162,8 +199,11 @@ export type TradeRepublicMessageType =
   | 'subscribeNews'
   | 'ticker'
   | 'timeline'
+  | 'timelineActivityLog'
   | 'timelineActions'
   | 'timelineDetail'
+  | 'timelineDetailV2'
+  | 'timelineTransactions'
   | 'tradingPerkConditionStatus'
   | 'unfollowWatchlist'
   | 'unsubscribeNews'
